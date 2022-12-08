@@ -1,0 +1,38 @@
+jenkins:
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+       - id: ${JENKINS_ADMIN_ID}
+         password: ${JENKINS_ADMIN_PASSWORD}
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+        - "USER:Overall/Administer:${JENKINS_ADMIN_ID}"
+        - "GROUP:Overall/Read:authenticated"
+  remotingSecurity:
+    enabled: true
+security:
+  queueItemAuthenticator:
+    authenticators:
+    - global:
+        strategy: triggeringUsersAuthorizationStrategy
+unclassified:
+  location:
+    url: http://localhost:8080/
+  sonarglobalconfiguration:
+    buildWrapperEnabled: false
+    dataMigrated: true
+    credentialsMigrated: true
+    installations:
+      - name: sonarqube
+        serverUrl: http://sonarqube:9000
+        credentialsId: 
+        webhookSecretId:
+        mojoVersion:
+        additionalProperties:
+        additionalAnalysisProperties:
+        triggers:
+          envVar:
+          skipScmCause: false
+          skipUpstreamCause: false
